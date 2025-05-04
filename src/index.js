@@ -5,6 +5,7 @@ import cookieParser from "cookie-parser";
 import jwtRouter from "./routes/jwtRoute.js";
 import { client } from "./mongodb/mongdb.config.js";
 import logoutRouter from "./routes/logoutRoute.js";
+import userRouter from "./routes/userRoute.js";
 
 configDotenv();
 
@@ -21,7 +22,8 @@ app.use(cookieParser())
 app.use(express.json());
 
 app.use(jwtRouter);
-app.use(logoutRouter)
+app.use(logoutRouter);
+app.use(userRouter)
 
 app.get("/", (_, res) => {
   res.send("The app is running");
