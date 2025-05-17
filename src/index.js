@@ -3,10 +3,15 @@ import express from "express";
 import { configDotenv } from "dotenv";
 import cookieParser from "cookie-parser";
 import jwtRouter from "./routes/jwtRoute.js";
-import { client } from "./mongodb/mongdb.config.js";
-import logoutRouter from "./routes/logoutRoute.js";
 import userRouter from "./routes/userRoute.js";
 import roleRouter from "./routes/roleRoute.js";
+import logoutRouter from "./routes/logoutRoute.js";
+import { client } from "./mongodb/mongdb.config.js";
+import submissionRouter from "./routes/submissionRoutes.js";
+import { singleTaskRouter, taskRouterAdmin, taskRouterBuyer, taskRouterWorker } from "./routes/taskRoute.js";
+import withdrawRouter from "./routes/withdrawRoute.js";
+import adminRouter from "./routes/adminRoute.js";
+
 
 configDotenv();
 
@@ -23,11 +28,19 @@ app.use(cookieParser())
 app.use(express.json());
 
 app.use(jwtRouter);
-app.use(logoutRouter);
 app.use(userRouter);
 app.use(roleRouter);
+app.use(logoutRouter);
+app.use(withdrawRouter);
+app.use(taskRouterBuyer);
+app.use(taskRouterAdmin);
+app.use(taskRouterWorker);
+app.use(singleTaskRouter);
+app.use(submissionRouter);
+app.use(adminRouter);
 
-app.get("/", (_, res) => {
+app.get("/", (req, res) => {
+console.log('cookies from home', req.cookies);
   res.send("The app is running");
 });
 

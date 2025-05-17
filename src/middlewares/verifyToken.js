@@ -6,6 +6,7 @@ const verifyToken = (req,res, next) => {
             return res.status(401).send({message: 'unauthorized access'})
         }
         console.log('from the middleware "vefiryToken"', decoded);
+        req.user = {...decoded}
         next()
     })
 }

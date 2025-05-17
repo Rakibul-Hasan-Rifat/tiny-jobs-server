@@ -1,11 +1,14 @@
 import { Router } from "express";
-import { postUser } from "../controllers/userControllers.js";
+import { deleteUser, getUsers, postUser, putUser } from "../controllers/userControllers.js";
 
 const userRouter = Router();
 
 userRouter
   .route("/users")
   .all((req, res, next) => next())
-  .post(postUser);
+  .get(getUsers)
+  .post(postUser)
+  .put(putUser)
+  .delete(deleteUser);
 
 export default userRouter;
