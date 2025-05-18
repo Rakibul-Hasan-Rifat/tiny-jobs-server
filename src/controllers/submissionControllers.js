@@ -8,9 +8,8 @@ export const getSubmittedTasks = async (req, res) => {
 };
 
 export const getSubmittedTasksByBuyer = async (req, res) => {
-  
   const result = await submitsColl
-    .find({ "buyer.email": req?.user?.email })
+    .find({ "buyer.email": req?.user?.email, task_status: "pending" })
     .toArray();
   res.send(result);
 };

@@ -7,8 +7,7 @@ export const getTasksForAdmin = async (req, res) => {
 };
 
 export const getTasksForBuyer = async (req, res) => {
-  const { email } = req.query;
-  console.log('buyer tasks', req.user.email);
+  console.log("buyer tasks", req.user.email);
   const result = await tasksColl
     .find({ "buyer.email": req?.user?.email })
     .toArray();
@@ -38,7 +37,7 @@ export const postTask = async (req, res) => {
   console.log(user?.coin, totalRequiredAmount);
 
   if (totalRequiredAmount > user?.coin) {
-    return res.send({ message: "You don't enough coin to pay the workers!" });
+    return res.send({ message: "Not available Coin. Purchase Coin" });
   }
 
   const result = await tasksColl.insertOne(req.body);
@@ -49,7 +48,7 @@ export const postTask = async (req, res) => {
       { $set: { ...user, coin: user.coin - totalRequiredAmount } }
     );
 
-    res.send(updateResult);
+    res.send({ ...result, ...updateResult });
   }
 };
 

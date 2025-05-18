@@ -8,10 +8,14 @@ import roleRouter from "./routes/roleRoute.js";
 import logoutRouter from "./routes/logoutRoute.js";
 import { client } from "./mongodb/mongdb.config.js";
 import submissionRouter from "./routes/submissionRoutes.js";
-import { singleTaskRouter, taskRouterAdmin, taskRouterBuyer, taskRouterWorker } from "./routes/taskRoute.js";
+import {
+  singleTaskRouter,
+  taskRouterAdmin,
+  taskRouterBuyer,
+  taskRouterWorker,
+} from "./routes/taskRoute.js";
 import withdrawRouter from "./routes/withdrawRoute.js";
 import adminRouter from "./routes/adminRoute.js";
-
 
 configDotenv();
 
@@ -21,10 +25,15 @@ const port = process.env.PORT || 4321;
 app.use(
   cors({
     credentials: true,
-    origin: ["http://localhost:5173", "http://localhost:5174"],
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    origin: [
+      "http://localhost:5173",
+      "http://localhost:5174",
+      "https://tiny-job-be929.web.app",
+    ],
   })
 );
-app.use(cookieParser())
+app.use(cookieParser());
 app.use(express.json());
 
 app.use(jwtRouter);
@@ -40,7 +49,7 @@ app.use(submissionRouter);
 app.use(adminRouter);
 
 app.get("/", (req, res) => {
-console.log('cookies from home', req.cookies);
+  console.log("cookies from home", req.cookies.token);
   res.send("The app is running");
 });
 
